@@ -1,5 +1,6 @@
 {
   "name": "frontend",
+  "author": "Sathvik Vempati",
   "private": true,
   "version": "0.0.0",
   "type": "module",

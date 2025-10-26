@@ -1,14 +1,8 @@
 ![OperatorAI](assets/OperatorAI-Header.png)
 
-# 🏆 Winner
-
-OperatorAI won third place in the [AssmeblyAI Winter Hackathon](https://hackathon.assemblyai.com/). Find our demo on [Devpost](https://devpost.com/software/draft-w86vkc).
-
-# 🎥 Demo
-
-https://github.com/user-attachments/assets/80212708-5675-46f7-8cf8-4c7195b8ea5d
-
 # 🚨 OperatorAI
+
+**Created by Sathvik Vempati**
 
 Did you know many 911 call centers are understaffed? During the last hurricane in Florida, thousands of 911 callers were faced with no services. Also, the latest report showed 60 percent of callers in the US cannot be located by emergency dispatchers because of outdated technologies.
 
@@ -77,9 +71,39 @@ We made sure to use best practices like creating pull requests and using the con
 
 These tools and practices allowed us to easily collaborate and contribute to the project, and they helped us maintain a high level of code quality and organization throughout the development process.
 
+# 🚀 Getting Started
+
+## Installation
+
+1. Clone this repository
+2. Install backend dependencies:
+   ```bash
+   cd backend
+   npm install
+   ```
+3. Install frontend dependencies:
+   ```bash
+   cd frontend
+   npm install
+   ```
+
+## Running the Application
+
+### Backend
+```bash
+cd backend
+npm start
+```
+
+### Frontend
+```bash
+cd frontend
+npm run dev
+```
+
 # Scripts
 
-If you would like to try out the final product, call *+1 (408) 617-9557* and follow any of the scripts above (or come up with your own!)
+If you would like to try out the product, you can test with the following emergency scenarios (or come up with your own!)
 
 ## Robbery
 

@@ -49,26 +49,11 @@ export function Footer() {
           </Badge>
         </chakra.h1>
         <Text align={'center'}>
-          Project Submission to&nbsp;
-          <Link
-            target="_blank"
-            rel="noopener noreferrer"
-            textDecoration="underline"
-            href="https://hackathon.assemblyai.com/"
-            display="inline-block"
-          >
-            AssemblyAI $50K AI Hackathon
-          </Link>
+          Created by Sathvik Vempati - AI-Powered Emergency Call System
         </Text>
         <Stack direction={'row'} spacing={6}>
-          <SocialButton label={'OperatorAI'} href={'https://www.operatorai.tech/'}>
-            <BsGlobe />
-          </SocialButton>
-          <SocialButton label={'Github'} href={'https://github.com/dtemir/OperatorAI'}>
+          <SocialButton label={'Github'} href={'https://github.com/sathvikvempati'}>
             <FaGithub />
-          </SocialButton>
-          <SocialButton label={'Devpost'} href={'https://devpost.com/software/draft-w86vkc'}>
-            <SiDevpost />
           </SocialButton>
         </Stack>
       </Container>
