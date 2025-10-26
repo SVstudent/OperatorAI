@@ -20,13 +20,14 @@ import {
   Image,
   Link,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import { ref, set } from 'firebase/database';
 import { db } from '../firebaseConfig';
 import { CallData, EMERGENCIES, PRIORITIES, STATUSES } from '../types/calls';
 import { Info } from './Info';
 import { StatusIndicator } from './StatusIndicator';
+import { DemoCallSimulator } from './DemoCallSimulator';
 
 const headers = ['Priority', 'Caller', 'Emergency', 'Time', 'Location', 'Status', ''];
 
@@ -34,13 +35,14 @@ interface TrProps {
   selected: boolean;
   data: CallData;
   onClick: (data: CallData) => void;
+  onJoinCall: (data: CallData) => void;
 }
 
 function updateField(callSid: string, key: string, value: string) {
   set(ref(db, `/calls/${callSid}/${key}`), value);
 }
 
-const TableRow: React.FC<TrProps> = ({ data, selected, onClick }) => {
+const TableRow: React.FC<TrProps> = ({ data, selected, onClick, onJoinCall }) => {
   const { isOpen, onToggle } = useDisclosure({
     defaultIsOpen: data.live,
   });
@@ -73,8 +75,19 @@ const TableRow: React.FC<TrProps> = ({ data, selected, onClick }) => {
               <br />
               <em>{formattedPhone}</em>
             </Box>
-            <Button size="sm" color="green.600" as={Link} href={`tel:${data.phone}`}>
-              {data.live ? 'Join' : 'Dial'}
+            <Button
+              size="sm"
+              colorScheme={data.live ? 'green' : 'blue'}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (data.live) {
+                  onJoinCall(data);
+                } else {
+                  window.location.href = `tel:${data.phone}`;
+                }
+              }}
+            >
+              {data.live ? 'Join Call' : 'Dial'}
             </Button>
           </Flex>
         </Td>
@@ -196,6 +209,13 @@ const CallsTable: React.FC<{
   calls: CallData[];
   onRowClick: (data: CallData) => void;
 }> = ({ calls, onRowClick, selectedRowKey }) => {
+  const [callSimulatorOpen, setCallSimulatorOpen] = useState(false);
+  const [selectedCall, setSelectedCall] = useState<CallData | null>(null);
+
+  const handleJoinCall = (call: CallData) => {
+    setSelectedCall(call);
+    setCallSimulatorOpen(true);
+  };
   const sortDescendingByDate = calls.sort(
     (a, b) => new Date((b as CallData).dateCreated).getTime() - new Date((a as CallData).dateCreated).getTime()
   );
@@ -205,38 +225,53 @@ const CallsTable: React.FC<{
   });
 
   return (
-    <TableContainer
-      display="flex"
-      maxH="90vh"
-      overflowY="auto"
-      border="1px solid"
-      borderRadius="2xl"
-      shadow="xl"
-      borderColor="blackAlpha.200"
-    >
-      <Table size="sm">
-        <Thead position="sticky" top="0" bg="white" zIndex={1} h="4rem">
-          <Tr>
-            {headers.map((header) => (
-              <Th key={header}>{header}</Th>
-            ))}
-          </Tr>
-        </Thead>
-        <Tbody>
-          {!sortByLive.length ? (
+    <>
+      <TableContainer
+        display="flex"
+        maxH="90vh"
+        overflowY="auto"
+        border="1px solid"
+        borderRadius="2xl"
+        shadow="xl"
+        borderColor="blackAlpha.200"
+      >
+        <Table size="sm">
+          <Thead position="sticky" top="0" bg="white" zIndex={1} h="4rem">
             <Tr>
-              <Td bg="white" colSpan={headers.length}>
-                <Info text="No Data Found" />
-              </Td>
+              {headers.map((header) => (
+                <Th key={header}>{header}</Th>
+              ))}
             </Tr>
-          ) : (
-            sortByLive.map((v) => (
-              <TableRow key={v.key} selected={selectedRowKey === v.key} data={v} onClick={onRowClick} />
-            ))
-          )}
-        </Tbody>
-      </Table>
-    </TableContainer>
+          </Thead>
+          <Tbody>
+            {!sortByLive.length ? (
+              <Tr>
+                <Td bg="white" colSpan={headers.length}>
+                  <Info text="No Data Found" />
+                </Td>
+              </Tr>
+            ) : (
+              sortByLive.map((v) => (
+                <TableRow
+                  key={v.key}
+                  selected={selectedRowKey === v.key}
+                  data={v}
+                  onClick={onRowClick}
+                  onJoinCall={handleJoinCall}
+                />
+              ))
+            )}
+          </Tbody>
+        </Table>
+      </TableContainer>
+      {selectedCall && (
+        <DemoCallSimulator
+          isOpen={callSimulatorOpen}
+          onClose={() => setCallSimulatorOpen(false)}
+          callData={selectedCall}
+        />
+      )}
+    </>
   );
 };
 
