@@ -1,5 +1,23 @@
 {
-    "rewrites": [
-        { "source": "/(.*)", "destination": "/" }
-    ]
+  "projects": [
+    {
+      "src": "frontend/vite.config.ts",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "frontend/dist"
+      }
+    }
+  ],
+  "builds": [
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "frontend/dist"
+      }
+    }
+  ],
+  "routes": [
+    { "source": "/(.*)", "destination": "/" }
+  ]
 }
