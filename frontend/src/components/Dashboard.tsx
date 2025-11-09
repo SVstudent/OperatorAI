@@ -48,17 +48,17 @@ export const Dashboard = ({
     return (
       <Box mx="auto" maxW="4xl">
         <Flex justifyContent="space-between">
-          <Skeleton w="200px" h="100px" />
-          <Skeleton w="200px" h="100px" />
-          <Skeleton w="200px" h="100px" />
-          <Skeleton w="200px" h="100px" />
+          <Skeleton w="200px" h="100px" startColor="gray.700" endColor="gray.600" />
+          <Skeleton w="200px" h="100px" startColor="gray.700" endColor="gray.600" />
+          <Skeleton w="200px" h="100px" startColor="gray.700" endColor="gray.600" />
+          <Skeleton w="200px" h="100px" startColor="gray.700" endColor="gray.600" />
         </Flex>
         <Flex flexDirection="column" gap="10px" pt="10">
-          <Skeleton pt="20px" w="full" h="30px" />
-          <Skeleton pt="20px" w="full" h="30px" />
-          <Skeleton pt="20px" w="full" h="30px" />
-          <Skeleton pt="20px" w="full" h="30px" />
-          <Skeleton pt="20px" w="full" h="30px" />
+          <Skeleton pt="20px" w="full" h="30px" startColor="gray.700" endColor="gray.600" />
+          <Skeleton pt="20px" w="full" h="30px" startColor="gray.700" endColor="gray.600" />
+          <Skeleton pt="20px" w="full" h="30px" startColor="gray.700" endColor="gray.600" />
+          <Skeleton pt="20px" w="full" h="30px" startColor="gray.700" endColor="gray.600" />
+          <Skeleton pt="20px" w="full" h="30px" startColor="gray.700" endColor="gray.600" />
         </Flex>
       </Box>
     );
@@ -87,10 +87,17 @@ export const Dashboard = ({
     <Box id="dashboard" p={{ md: 8 }} w={{ md: '75vw' }} minH={'100vh'} mx={'auto'}>
       <Box w={'full'} mb={8}>
         <Box>
-          <chakra.h1 textAlign={'left'} fontSize={'4xl'} pt={10} fontWeight={'bold'}>
+          <chakra.h1
+            textAlign={'left'}
+            fontSize={'4xl'}
+            pt={10}
+            fontWeight={'bold'}
+            color="red.400"
+            textShadow="0 0 20px rgba(252, 129, 129, 0.5)"
+          >
             OperatorAI
-            <Badge ml={2} mt={-5} fontSize="0.4em" colorScheme="purple">
-              Alpha
+            <Badge ml={2} mt={-5} fontSize="0.4em" colorScheme="red" bg="red.600">
+              LIVE
             </Badge>
           </chakra.h1>
           {error ? <Text>Error: {error.message}</Text> : null}
@@ -139,11 +146,11 @@ export const Dashboard = ({
         h="50vh"
         mb={8}
         rounded={'2xl'}
-        bg="white"
-        shadow={'xl'}
+        bg="gray.800"
+        shadow={'2xl'}
         overflow={'hidden'}
-        border="1px solid"
-        borderColor="blackAlpha.200"
+        border="2px solid"
+        borderColor="red.600"
       >
         <Wrapper apiKey={import.meta.env.VITE_GOOGLE_API_KEY} render={render}>
           <Map

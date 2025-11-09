@@ -22,16 +22,16 @@ export const Landing = () => {
       <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
         <Flex position={'relative'} p={8} flex={1} align={'center'} justify={'center'}>
           <Stack spacing={6} w={'full'} maxW={'lg'}>
-            <Heading fontWeight={600} fontSize={{ base: '4xl', md: '6xl' }}>
+            <Heading fontWeight={600} fontSize={{ base: '4xl', md: '6xl' }} color="red.400" textShadow="0 0 30px rgba(252, 129, 129, 0.6)">
               OperatorAI
-              <Badge ml={2} mt={-12} fontSize="0.3em" colorScheme="purple">
-                Alpha
+              <Badge ml={2} mt={-12} fontSize="0.3em" colorScheme="red" bg="red.600">
+                LIVE
               </Badge>
             </Heading>
-            <Text fontSize={{ base: 'md', lg: 'lg' }} color={'gray.500'}>
+            <Text fontSize={{ base: 'md', lg: 'lg' }} color={'gray.300'}>
               {`OperatorAI system lets callers talk to AI if there are no available 911 operators, grading them on the scale of how important their call is based on the keywords and recording their location. While the responses are being gathered, it will prioritize their call and hand over the call transcript to the 911 operator.`}
             </Text>
-            <Text fontSize={{ base: 'md', lg: 'lg' }} color={'gray.500'}>
+            <Text fontSize={{ base: 'md', lg: 'lg' }} color={'gray.300'}>
               <em>
                 <small>
                   Call our OperatorAI Emergency Services
@@ -49,10 +49,10 @@ export const Landing = () => {
             <Stack direction={{ base: 'column', md: 'row' }} spacing={4}>
               <Button
                 rounded={'full'}
-                bg={'blue.400'}
+                bg={'red.600'}
                 color={'white'}
                 _hover={{
-                  bg: 'blue.500',
+                  bg: 'red.700',
                 }}
                 onClick={() =>
                   document.querySelector('#dashboard')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -62,6 +62,12 @@ export const Landing = () => {
               </Button>
               <Button
                 rounded={'full'}
+                variant="outline"
+                borderColor="red.600"
+                color="red.400"
+                _hover={{
+                  bg: 'red.900',
+                }}
                 onClick={() => document.querySelector('#faq')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
               >
                 How It Works

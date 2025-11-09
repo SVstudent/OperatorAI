@@ -27,54 +27,113 @@ interface Message {
   delay: number; // milliseconds to wait before showing this message
 }
 
-// Pre-scripted emergency conversation
-const DEMO_SCRIPT: Message[] = [
-  {
-    speaker: 'ai',
-    text: 'Emergency services, what is your emergency?',
-    delay: 1000,
-  },
-  {
-    speaker: 'caller',
-    text: "Hi, my name is Lucas. I'm at 501 4th Ave and someone just crashed into my car.",
-    delay: 2000,
-  },
-  {
-    speaker: 'ai',
-    text: 'I understand, Lucas. Are you or anyone else injured?',
-    delay: 2500,
-  },
-  {
-    speaker: 'caller',
-    text: "I have my child with me. She looks fine but it's hard to check because my legs are stuck and I cannot move.",
-    delay: 3000,
-  },
-  {
-    speaker: 'ai',
-    text: 'Stay calm. I am dispatching an ambulance and fire rescue to 501 4th Ave immediately. Can you tell me if you are bleeding?',
-    delay: 2500,
-  },
-  {
-    speaker: 'caller',
-    text: "I don't know if I'm bleeding or not. Please come as soon as possible!",
-    delay: 2000,
-  },
-  {
-    speaker: 'ai',
-    text: 'Help is on the way, ETA 4 minutes. Please stay on the line and keep talking to your child to keep her calm. Do not attempt to move.',
-    delay: 3000,
-  },
-  {
-    speaker: 'caller',
-    text: "Okay, thank you. I'm staying still. My daughter is okay, just scared.",
-    delay: 2500,
-  },
-  {
-    speaker: 'ai',
-    text: 'Emergency units have been dispatched. Priority level: HIGH. Paramedics are 2 minutes away.',
-    delay: 2000,
-  },
-];
+// Pre-scripted emergency conversations by caller name
+const DEMO_SCRIPTS: Record<string, Message[]> = {
+  'Lucas Wilson': [
+    {
+      speaker: 'ai',
+      text: 'Emergency services, what is your emergency?',
+      delay: 1000,
+    },
+    {
+      speaker: 'caller',
+      text: "Hi, my name is Lucas. I'm at 501 4th Ave and someone just crashed into my car.",
+      delay: 2000,
+    },
+    {
+      speaker: 'ai',
+      text: 'I understand, Lucas. Are you or anyone else injured?',
+      delay: 2500,
+    },
+    {
+      speaker: 'caller',
+      text: "I have my child with me. She looks fine but it's hard to check because my legs are stuck and I cannot move.",
+      delay: 3000,
+    },
+    {
+      speaker: 'ai',
+      text: 'Stay calm. I am dispatching an ambulance and fire rescue to 501 4th Ave immediately. Can you tell me if you are bleeding?',
+      delay: 2500,
+    },
+    {
+      speaker: 'caller',
+      text: "I don't know if I'm bleeding or not. Please come as soon as possible!",
+      delay: 2000,
+    },
+    {
+      speaker: 'ai',
+      text: 'Help is on the way, ETA 4 minutes. Please stay on the line and keep talking to your child to keep her calm. Do not attempt to move.',
+      delay: 3000,
+    },
+    {
+      speaker: 'caller',
+      text: "Okay, thank you. I'm staying still. My daughter is okay, just scared.",
+      delay: 2500,
+    },
+    {
+      speaker: 'ai',
+      text: 'Emergency units have been dispatched. Priority level: HIGH. Paramedics are 2 minutes away.',
+      delay: 2000,
+    },
+  ],
+  'Sarah Anderson': [
+    {
+      speaker: 'ai',
+      text: 'Emergency services, what is your emergency?',
+      delay: 1000,
+    },
+    {
+      speaker: 'caller',
+      text: "Please help! My name is Sarah Anderson and I'm at 1234 Market Street. My elderly mother just collapsed!",
+      delay: 2500,
+    },
+    {
+      speaker: 'ai',
+      text: 'Okay Sarah, stay calm. Is your mother breathing?',
+      delay: 2000,
+    },
+    {
+      speaker: 'caller',
+      text: "Yes, she's breathing but she's unconscious. She won't respond to me!",
+      delay: 2500,
+    },
+    {
+      speaker: 'ai',
+      text: 'I am dispatching an ambulance to 1234 Market Street immediately. Can you check if she has a pulse?',
+      delay: 2500,
+    },
+    {
+      speaker: 'caller',
+      text: "I can feel a pulse but it seems weak. Please hurry!",
+      delay: 2000,
+    },
+    {
+      speaker: 'ai',
+      text: 'Help is on the way. Keep her lying down and monitor her breathing. Do not give her anything to eat or drink. What is her approximate age?',
+      delay: 3000,
+    },
+    {
+      speaker: 'caller',
+      text: "She's 78 years old. She has a history of heart problems.",
+      delay: 2000,
+    },
+    {
+      speaker: 'ai',
+      text: 'Understood. Paramedics are en route, ETA 3 minutes. Stay on the line with me and keep monitoring her condition.',
+      delay: 2500,
+    },
+    {
+      speaker: 'caller',
+      text: "Okay, I'm watching her. Thank you for your help.",
+      delay: 2000,
+    },
+    {
+      speaker: 'ai',
+      text: 'Emergency medical services have been dispatched. Priority level: HIGH. Advanced life support unit arriving shortly.',
+      delay: 2500,
+    },
+  ],
+};
 
 interface DemoCallSimulatorProps {
   isOpen: boolean;
@@ -117,9 +176,12 @@ export const DemoCallSimulator: React.FC<DemoCallSimulatorProps> = ({ isOpen, on
   const [isSpeaking, setIsSpeaking] = useState(false);
   const audioQueueRef = useRef<boolean>(false);
 
-  const bgColor = useColorModeValue('gray.50', 'gray.800');
-  const callerBg = useColorModeValue('blue.100', 'blue.900');
-  const aiBg = useColorModeValue('green.100', 'green.900');
+  const bgColor = 'gray.900';
+  const callerBg = 'blue.700';
+  const aiBg = 'red.700';
+
+  // Get the appropriate script for this caller
+  const DEMO_SCRIPT = DEMO_SCRIPTS[callData.name] || DEMO_SCRIPTS['Lucas Wilson'];
 
   useEffect(() => {
     if (!isOpen) {
@@ -160,7 +222,15 @@ export const DemoCallSimulator: React.FC<DemoCallSimulatorProps> = ({ isOpen, on
 
       // Play audio for this message
       setIsSpeaking(true);
-      const voiceType = currentMessage.speaker === 'caller' ? 'male' : 'female';
+      // Determine voice based on caller name and speaker role
+      let voiceType: 'male' | 'female';
+      if (currentMessage.speaker === 'caller') {
+        // Sarah Anderson is female, Lucas Wilson is male
+        voiceType = callData.name === 'Sarah Anderson' ? 'female' : 'male';
+      } else {
+        // AI operator is always female
+        voiceType = 'female';
+      }
       await speakWithGemini(currentMessage.text, voiceType);
       setIsSpeaking(false);
 
@@ -182,24 +252,24 @@ export const DemoCallSimulator: React.FC<DemoCallSimulatorProps> = ({ isOpen, on
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="xl" isCentered>
-      <ModalOverlay bg="blackAlpha.800" />
-      <ModalContent maxH="80vh">
-        <ModalHeader>
+      <ModalOverlay bg="blackAlpha.900" />
+      <ModalContent maxH="80vh" bg="gray.800" color="white">
+        <ModalHeader bg="gray.900" borderBottom="2px solid" borderColor="red.600">
           <Flex alignItems="center" gap={3}>
             <Box w={3} h={3} borderRadius="full" bg="red.500" animation="pulse 2s infinite" />
-            <Text>Live Call - {callData.name}</Text>
+            <Text color="white">Live Call - {callData.name}</Text>
             {isSpeaking && (
               <Flex alignItems="center" gap={2} ml={4}>
-                <Icon as={FaVolumeUp} color="green.500" />
-                <Text fontSize="sm" color="green.500">Speaking...</Text>
+                <Icon as={FaVolumeUp} color="red.400" />
+                <Text fontSize="sm" color="red.400">Speaking...</Text>
               </Flex>
             )}
-            <Badge colorScheme="red" ml="auto">
+            <Badge colorScheme="red" ml="auto" bg="red.600">
               LIVE
             </Badge>
           </Flex>
         </ModalHeader>
-        <ModalCloseButton />
+        <ModalCloseButton color="white" />
         <ModalBody pb={6} bg={bgColor}>
           <VStack spacing={4} align="stretch" maxH="60vh" overflowY="auto" p={4}>
             {messages.length === 0 && (

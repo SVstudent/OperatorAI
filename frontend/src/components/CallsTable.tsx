@@ -57,9 +57,10 @@ const TableRow: React.FC<TrProps> = ({ data, selected, onClick, onJoinCall }) =>
       <Tr
         cursor="pointer"
         _hover={{
-          bg: 'blackAlpha.100',
+          bg: 'whiteAlpha.100',
         }}
-        bg={selected ? 'blue.50' : 'white'}
+        bg={selected ? 'blue.900' : 'gray.800'}
+        color="white"
         onClick={() => onClick(data)}
       >
         <Td textAlign="left" w="30px" pl="5">
@@ -102,29 +103,32 @@ const TableRow: React.FC<TrProps> = ({ data, selected, onClick, onJoinCall }) =>
         </Td>
       </Tr>
       <Tr display={isOpen ? 'contents' : 'none'}>
-        <Td colSpan={headers.length} bg="white">
+        <Td colSpan={headers.length} bg="gray.800">
           <Collapse in={isOpen} animateOpacity>
             <Stack direction={{ base: 'column', lg: 'row' }}>
               <VStack w={{ base: 'full', lg: '2xl' }} alignItems="left" m="2" alignSelf={'flex-start'}>
-                <Text textAlign="left" fontWeight="bold" color="gray.600">
+                <Text textAlign="left" fontWeight="bold" color="red.400">
                   Transcript
                 </Text>
                 <Text
                   whiteSpace="pre-wrap"
                   border="1px solid"
                   fontStyle="italic"
-                  borderColor="blackAlpha.100"
+                  borderColor="red.600"
                   borderRadius="2xl"
                   shadow="md"
                   m="3"
                   p="3"
+                  bg="gray.900"
+                  color="gray.200"
                 >
                   {data.transcript} {data.live ? <span className="blinking-cursor">|</span> : null}
                 </Text>
                 {data.geocode && (
                   <Image
                     cursor="pointer"
-                    borderColor="blackAlpha.100"
+                    borderColor="red.600"
+                    border="1px solid"
                     borderRadius="2xl"
                     shadow="md"
                     onClick={() => {
@@ -142,12 +146,14 @@ const TableRow: React.FC<TrProps> = ({ data, selected, onClick, onJoinCall }) =>
               </VStack>
               <VStack flexGrow={1} alignSelf={'center'}>
                 <HStack w="sm">
-                  <Text textAlign="left" fontWeight="bold" color="gray.600" w={36}>
+                  <Text textAlign="left" fontWeight="bold" color="red.400" w={36}>
                     Status
                   </Text>
                   <Select
                     value={data.status}
-                    bg={`${STATUSES[data.status]?.color}.200`}
+                    bg={`${STATUSES[data.status]?.color}.600`}
+                    color="white"
+                    borderColor="red.600"
                     onInput={(e) => updateField(data.callSid, 'status', e.currentTarget.value)}
                   >
                     {Object.entries(STATUSES).map(([, { key: statusKey, display }]) => {
@@ -160,12 +166,14 @@ const TableRow: React.FC<TrProps> = ({ data, selected, onClick, onJoinCall }) =>
                   </Select>
                 </HStack>
                 <HStack w="sm">
-                  <Text textAlign="left" fontWeight="bold" color="gray.600" w={36}>
+                  <Text textAlign="left" fontWeight="bold" color="red.400" w={36}>
                     Priority
                   </Text>
                   <Select
                     value={data.priority}
-                    bg={`${PRIORITIES[data.priority]?.color}.200`}
+                    bg={`${PRIORITIES[data.priority]?.color}.600`}
+                    color="white"
+                    borderColor="red.600"
                     onInput={(e) => updateField(data.callSid, 'priority', e.currentTarget.value)}
                   >
                     {Object.entries(PRIORITIES).map(([, { key: statusKey, display }]) => {
@@ -178,11 +186,14 @@ const TableRow: React.FC<TrProps> = ({ data, selected, onClick, onJoinCall }) =>
                   </Select>
                 </HStack>
                 <HStack w="sm">
-                  <Text textAlign="left" fontWeight="bold" color="gray.600" w={36}>
+                  <Text textAlign="left" fontWeight="bold" color="red.400" w={36}>
                     Emergency
                   </Text>
                   <Select
                     value={data.emergency}
+                    bg="gray.700"
+                    color="white"
+                    borderColor="red.600"
                     onInput={(e) => updateField(data.callSid, 'emergency', e.currentTarget.value)}
                   >
                     <option value={''}>Assign</option>
@@ -230,23 +241,24 @@ const CallsTable: React.FC<{
         display="flex"
         maxH="90vh"
         overflowY="auto"
-        border="1px solid"
+        border="2px solid"
         borderRadius="2xl"
-        shadow="xl"
-        borderColor="blackAlpha.200"
+        shadow="2xl"
+        borderColor="red.600"
+        bg="gray.800"
       >
-        <Table size="sm">
-          <Thead position="sticky" top="0" bg="white" zIndex={1} h="4rem">
+        <Table size="sm" variant="unstyled">
+          <Thead position="sticky" top="0" bg="gray.900" zIndex={1} h="4rem" borderBottom="1px solid" borderColor="red.600">
             <Tr>
               {headers.map((header) => (
-                <Th key={header}>{header}</Th>
+                <Th key={header} color="white">{header}</Th>
               ))}
             </Tr>
           </Thead>
           <Tbody>
             {!sortByLive.length ? (
               <Tr>
-                <Td bg="white" colSpan={headers.length}>
+                <Td bg="gray.800" colSpan={headers.length}>
                   <Info text="No Data Found" />
                 </Td>
               </Tr>

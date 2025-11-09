@@ -95,7 +95,7 @@ const demoCallsgetCalls = [
     phone: "+14155557890",
     priority: "MEDIUM",
     status: "OPEN",
-    transcript: "Hey, I am Lucas, I am at home at 501 4th Ave and I was just getting out of my garage and someone just crashed into me. I am very concerned. I have my child with me. She looks fine but it is hard to check because my legs are stuck and I cannot move. I do not know if I am bleeding or not. Can you please come as soon as possible?"
+    transcript: "" // Empty - will fill in real-time during demo call
   },
   {
     callSid: "DEMO_CA_medical_006",
@@ -109,7 +109,7 @@ const demoCallsgetCalls = [
     phone: "+14155552345",
     priority: "HIGH",
     status: "OPEN",
-    transcript: "Please help! My name is Sarah Anderson and I'm at 1234 Market Street. My elderly mother just collapsed and she's not responding. She's breathing but unconscious. Please send an ambulance right away!"
+    transcript: "" // Empty - will fill in real-time during demo call
   }
 ];
 

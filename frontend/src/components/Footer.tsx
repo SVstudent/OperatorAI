@@ -32,7 +32,7 @@ const SocialButton = ({ children, label, href }: { children: ReactNode; label: s
 
 export function Footer() {
   return (
-    <Box bg={useColorModeValue('gray.50', 'gray.900')} color={useColorModeValue('gray.700', 'gray.200')}>
+    <Box bg="gray.900" color="gray.300" borderTop="2px solid" borderColor="red.600">
       <Container
         as={Stack}
         maxW={'6xl'}
@@ -42,13 +42,13 @@ export function Footer() {
         justify={{ base: 'center', md: 'space-between' }}
         align={{ base: 'center', md: 'center' }}
       >
-        <chakra.h1 textAlign={'left'} fontSize={'2xl'} fontWeight={'bold'}>
+        <chakra.h1 textAlign={'left'} fontSize={'2xl'} fontWeight={'bold'} color="red.400">
           OperatorAI
-          <Badge ml={2} mt={-5} fontSize="0.35em" colorScheme="purple">
-            Alpha
+          <Badge ml={2} mt={-5} fontSize="0.35em" colorScheme="red" bg="red.600">
+            LIVE
           </Badge>
         </chakra.h1>
-        <Text align={'center'}>
+        <Text align={'center'} color="gray.300">
           Created by Sathvik Vempati - AI-Powered Emergency Call System
         </Text>
         <Stack direction={'row'} spacing={6}>

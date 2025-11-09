@@ -25,7 +25,7 @@ function App() {
     .filter(({ key }) => !!key);
 
   return (
-    <Container bg="gray.50" minH="100vh" maxW="10xl" mx="0" pr={{ base: '4', lg: '0' }}>
+    <Container bg="gray.900" minH="100vh" maxW="10xl" mx="0" pr={{ base: '4', lg: '0' }}>
       <Landing />
       <Dashboard calls={calls} loading={loading} error={error} />
       <Footer />
