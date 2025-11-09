@@ -4,7 +4,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "pretty": "prettier --write \"./**/*.{js,json}\""
+    "pretty": "prettier --write \"./**/*.{js,json}\"",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "author": "Sathvik Vempati",
   "license": "MIT",
@@ -19,4 +22,6 @@
     "wavefile": "^11.0.0",
     "ws": "^8.11.0"
   }
+  
 }
+
